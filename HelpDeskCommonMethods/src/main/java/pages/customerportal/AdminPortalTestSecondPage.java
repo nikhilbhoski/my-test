@@ -1,18 +1,16 @@
-package Admin_Portal;
+package pages.customerportal;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 import webdriverbase.AppPage;
 
-public class AdminPortalTest2ndPage extends AppPage {
+public class AdminPortalTestSecondPage extends AppPage {
 
-	public AdminPortalTest2ndPage(WebDriver driver) {
+	public AdminPortalTestSecondPage(WebDriver driver) {
 		super(driver);
-		// TODO Auto-generated constructor stub
 	}
 	
 	@FindBy(xpath = "//span[@class='hf-top-bar_title_text hf-font-light']")
@@ -145,10 +143,10 @@ public class AdminPortalTest2ndPage extends AppPage {
   	@FindBy(xpath = "//a[@data-test-id='details-close']") 
   	private WebElement CloseTicket;
   	
-  	public AdminPortalTest1stPage closeTheTicket()
+  	public AdminPortalTestFirstPage closeTheTicket()
    	{
   		CloseTicket.click();
-  		return new AdminPortalTest1stPage(driver);
+  		return new AdminPortalTestFirstPage(driver);
   		
    	}
    

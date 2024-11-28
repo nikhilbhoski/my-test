@@ -1,18 +1,7 @@
 package webdriverbase;
 
-import java.awt.Toolkit;
-import java.awt.datatransfer.StringSelection;
-import java.io.File;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.time.Duration;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Set;
-import java.util.concurrent.TimeUnit;
+import java.util.Objects;
+
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -20,12 +9,13 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.Assert;
-import org.testng.TestListenerAdapter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 
 public class AppPage {
+	private static final Logger logger = LoggerFactory.getLogger(AppPage.class);
 	
 	public static String PATH_TO_TEST_DATA_FILE = "src/main/resources/";
 	public static String WINDOWS_PATH_TO_TEST_DATA_DIR = "src/main/resources/";
@@ -35,8 +25,7 @@ public class AppPage {
 	JavascriptExecutor javaScriptExecutor;
 	
 	public AppPage(WebDriver driver) {
-		this.driver = driver;
-		waitImplicitly();	
+		this.driver = Objects.requireNonNull(driver, "WebDriver cannot be null");
 		PageFactory.initElements(driver, this);
 		maximizeWindow();
 	}
@@ -55,14 +44,6 @@ public class AppPage {
 	
 	public void maximizeWindow() {
 			driver.manage().window().maximize();		
-	}
-	
-	public void waitImplicitly() {
-		driver.manage().timeouts().implicitlyWait(WAIT_TIME_SEC, TimeUnit.SECONDS);
-	}
-
-	public void waitImplicitly(int timeOutInSeconds) {
-		driver.manage().timeouts().implicitlyWait(timeOutInSeconds, TimeUnit.SECONDS);
 	}
 	
 	public void clearAndType(WebElement element, String text) {
@@ -84,8 +65,9 @@ public class AppPage {
 	}
 	
 	public JavascriptExecutor getJavaScriptExecutor() {
-		if (javaScriptExecutor == null)
+		if (javaScriptExecutor == null){
 			javaScriptExecutor = (JavascriptExecutor) driver;
+		}	
 		return javaScriptExecutor;
 	}
 	
@@ -95,13 +77,20 @@ public class AppPage {
 
 			scrolltoElement(element);
 		} catch (Exception ex) {
-			
+			logger.error("Failed to scroll to element", ex.getMessage());
+			throw new RuntimeException(ex);
 		}
 	}
 	
 	public void scrolltoElement(WebElement element) throws InterruptedException {
-		getJavaScriptExecutor().executeScript("arguments[0].scrollIntoView(false)", element);
-		Thread.sleep(1000);
+		try {
+            getJavaScriptExecutor().executeScript("arguments[0].scrollIntoView({block: 'center'})", element);
+            waitForVisible(element);
+            logger.debug("Scrolled to element");
+        } catch (Exception e) {
+            logger.error("Failed to scroll to element", e);
+            throw new RuntimeException("Scroll to element failed", e);
+        }
 	}
 	
 	public void waitForVisible(WebElement element) {
@@ -112,22 +101,14 @@ public class AppPage {
 	
 	public String getCurrentWorkingDirectory()
 	{
-		String workingDir = null;
-		try{
-			workingDir = System.getProperty("user.dir");
-		}catch(Exception e){
-			e.printStackTrace();
-		}
-		return workingDir;
+		return System.getProperty("user.dir");
+		
 	}
 	
-	public String getTestDataFullDirPath(String fileName)
-	{
-		String path = PATH_TO_TEST_DATA_FILE;
-		if(getOperatingSystemType() == OSType.Windows)
-			path = WINDOWS_PATH_TO_TEST_DATA_DIR;
-		return (getCurrentWorkingDirectory()+ path+ fileName);
+	public String getTestDataFullDirPath(String fileName) {
+		return String.format("%s%s%s", getCurrentWorkingDirectory(), WINDOWS_PATH_TO_TEST_DATA_DIR, fileName);
 	}
+	
 	
 	public enum OSType {
 	    Windows, MacOS, Linux, Other

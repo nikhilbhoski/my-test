@@ -3,10 +3,10 @@ package Admin_Portal;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import CommonTests.CommonTests1;
+import common.CommonTests;
 import CustomerPortal.SupportPortalPage;
 
-public class AdminPortalTest2 extends CommonTests1 {
+public class AdminPortalTest2 extends CommonTests {
   
   @Test
   public void Scenario2() {

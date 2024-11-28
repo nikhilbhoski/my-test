@@ -1,12 +1,12 @@
-package Admin_Portal;
+package test.adminportal;
 
 import org.seleniumhq.jetty9.util.log.LoggerLog;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import CommonTests.CommonTests1; 
+import common.CommonTests; 
 
- public class AdminPortalTest1 extends CommonTests1  {
+ public class AdminPortalTest1 extends CommonTests  {
 
   @Test
   public void Scenario1() {
@@ -26,8 +26,7 @@ import CommonTests.CommonTests1;
 		catch (Throwable e) {
 			e.printStackTrace();
 			Assert.fail("Error in "+ Methodname +" : "+ e.getMessage());
-		}
-		
+		}		
 	
   } 
   

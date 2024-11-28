@@ -1,13 +1,9 @@
-package CustomerPortal;
-import java.util.concurrent.TimeUnit;
+package pages.customerportal;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
 
-import Admin_Portal.AdminPortalTest2ndPage;
-import Admin_Portal.Login_Page;
 import webdriverbase.AppPage;
 
 
@@ -114,18 +110,13 @@ public class SupportPortalPage extends AppPage{
 	@FindBy(xpath = "//button[@id='submit']")  
 	private WebElement CreateTicket;
 		
-	public AdminPortalTest2ndPage clickCreateTicket()
+	public AdminPortalTestSecondPage clickCreateTicket()
 	 {
 		   CreateTicket.click();
-		   return new AdminPortalTest2ndPage(driver);
+		   return new AdminPortalTestSecondPage(driver);
 	 }
 	
      public void sleep() throws InterruptedException {
     	 Thread.sleep(1000);
      }
-     
-     
-     
-	
-	
 }
