@@ -1,6 +1,7 @@
 package webdriverbase;
 
 import java.util.concurrent.TimeUnit;
+import java.util.Objects;
 
 import javax.management.RuntimeErrorException;
 
@@ -28,7 +29,7 @@ public class AppPage {
 	JavascriptExecutor javaScriptExecutor;
 	
 	public AppPage(WebDriver driver) {
-		this.driver = driver;
+		this.driver = Objects.requireNonNull(driver, "WebDriver cannot be null");
 		PageFactory.initElements(driver, this);
 		maximizeWindow();
 	}
