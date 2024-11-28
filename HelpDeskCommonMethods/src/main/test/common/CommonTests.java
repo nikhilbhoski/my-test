@@ -1,4 +1,4 @@
-package CommonTests;
+package common;
 
 import java.io.File;
 
@@ -9,19 +9,19 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Test;
 
-import Admin_Portal.AdminPortalTest1;
-import Admin_Portal.AdminPortalTest1stPage;
-import Admin_Portal.AdminPortalTest2ndPage;
-import Admin_Portal.Login_Page;
-import CustomerPortal.SupportPortalPage;
+import pages.LoginPage;
+import pages.customerportal.AdminPortalTestFirstPage;
+import pages.customerportal.AdminPortalTestSecondPage;
+import pages.customerportal.SupportPortalPage;
+import pages.LoginPage;
 import webdriverbase.BaseTest;
 
-public class CommonTests1 extends BaseTest{
+public class CommonTests extends BaseTest{
 	
-public Login_Page hploginpage;
+public LoginPage hploginpage;
 public SupportPortalPage hpSupportPortalPage;
-public AdminPortalTest1stPage hpAdminPortalTest1;
-public AdminPortalTest2ndPage hpAdminPortalTest2;
+public AdminPortalTestFirstPage hpAdminPortalTest1;
+public AdminPortalTestSecondPage hpAdminPortalTest2;
 	
 public String AdminPortalURL = "https://interview.supporthive.com/staff";
 public static String SupportTicketURL = "https://interview.supporthive.com/new/";
@@ -42,7 +42,7 @@ public void loginasAdmin() {
 
 	try
 	{	
-		hploginpage = new Login_Page(getDriver());
+		hploginpage = new LoginPage(getDriver());
 		hploginpage.navigateToHappyFoxHomePageURL(AdminPortalURL);
 		hploginpage.enterUsername(username);
 		System.out.println("username entered");
@@ -105,7 +105,7 @@ public void loginasAdmin() {
           System.out.println("New Status process started");
           hpAdminPortalTest1.enterStatusName(statusName);
           System.out.println("status name entered");
-          //hpAdminPortalTest1.enterStatusColour("#21d0d5"); //#21d0d5 skyblue, #21d567 green
+          
           System.out.println("colour set");
           hpAdminPortalTest1.enterBehavior("Pending");
           hpAdminPortalTest1.enterStatusDescription("Status when a new issue ticket is created in HappyFox");
