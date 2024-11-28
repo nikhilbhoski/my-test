@@ -1,11 +1,7 @@
 package webdriverbase;
 
-import java.util.concurrent.TimeUnit;
 import java.util.Objects;
 
-import javax.management.RuntimeErrorException;
-
-import java.time.Duration;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
@@ -89,7 +85,7 @@ public class AppPage {
 	public void scrolltoElement(WebElement element) throws InterruptedException {
 		try {
             getJavaScriptExecutor().executeScript("arguments[0].scrollIntoView({block: 'center'})", element);
-            waitForElementInteractable(element);
+            waitForVisible(element);
             logger.debug("Scrolled to element");
         } catch (Exception e) {
             logger.error("Failed to scroll to element", e);
